@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.mar.framework.core.logging.Logger;
+import com.mar.framework.core.logging.LogUtils;
 
 public class ImageIOUtils {
 
@@ -28,7 +28,7 @@ public class ImageIOUtils {
             image = ImageIO.read(imageFile);
         }
         catch (IOException e) {
-            Logger.logError(ImageIOUtils.class, "IOException [" + e.toString() + "]");
+            LogUtils.logError(ImageIOUtils.class, "IOException [" + e.toString() + "]");
         }
         return image;
     }
@@ -45,7 +45,7 @@ public class ImageIOUtils {
             ImageIO.write(pImage, pFormat, imageFile);
         }
         catch (IOException e) {
-            Logger.logError(ImageIOUtils.class, "IOException [" + e.toString() + "]");
+            LogUtils.logError(ImageIOUtils.class, "IOException [" + e.toString() + "]");
         }
     }
 
