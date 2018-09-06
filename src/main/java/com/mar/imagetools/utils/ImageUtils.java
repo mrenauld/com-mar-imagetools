@@ -7,20 +7,22 @@ import java.awt.image.DataBufferByte;
 import com.mar.algotools.mathematics.utils.MathOps;
 
 /**
- * Image utils. The RGBA color integer representation works as follows: each integer value contains, from most
- * significant to less significant<br />
+ * Image utils. The RGBA color integer representation works as follows: each
+ * integer value contains, from most significant to less significant<br />
  * <ul>
  * <li>alpha (255 if no alpha channel in the Color).</li>
  * <li>red</li>
  * <li>green</li>
  * <li>blue</li>
  * </ul>
+ *
  * @author mrenauld
  */
 public class ImageUtils {
 
     /**
      * Returns an RGBA integer array representing the specified BufferedImage.
+     *
      * @param pImage
      * @return
      */
@@ -47,8 +49,7 @@ public class ImageUtils {
                     row++;
                 }
             }
-        }
-        else {
+        } else {
             final int pixelLength = 3;
             for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength) {
                 int argb = 0;
@@ -69,8 +70,9 @@ public class ImageUtils {
     }
 
     /**
-     * Converts an integer array representing an image channel (0 to 255 values) into a float array (0.0f to 1.0f
-     * values).
+     * Converts an integer array representing an image channel (0 to 255 values)
+     * into a float array (0.0f to 1.0f values).
+     *
      * @param pIntArray
      * @return
      */
@@ -87,7 +89,9 @@ public class ImageUtils {
     }
 
     /**
-     * Converts an integer channel value (between 0 and 255) into a float value between 0.0f and 1.0f.
+     * Converts an integer channel value (between 0 and 255) into a float value
+     * between 0.0f and 1.0f.
+     *
      * @param pChannelValue
      * @return
      */
@@ -97,6 +101,7 @@ public class ImageUtils {
 
     /**
      * Returns the RGBA integer corresponding to the specified Color.
+     *
      * @param pColor
      * @return
      */
@@ -110,8 +115,9 @@ public class ImageUtils {
     }
 
     /**
-     * Converts a float array (0.0f to 1.0f values) into an integer array representing an image channel (0 to 255
-     * values).
+     * Converts a float array (0.0f to 1.0f values) into an integer array
+     * representing an image channel (0 to 255 values).
+     *
      * @param pIntArray
      * @return
      */
@@ -128,8 +134,10 @@ public class ImageUtils {
     }
 
     /**
-     * Converts a float value between 0.0f and 1.0f into an integer channel value (between 0 and 255). If the value is
-     * outside the 0-255 range, it is clamped to this range.
+     * Converts a float value between 0.0f and 1.0f into an integer channel
+     * value (between 0 and 255). If the value is outside the 0-255 range, it is
+     * clamped to this range.
+     *
      * @param pFloat
      * @return
      */
@@ -138,8 +146,9 @@ public class ImageUtils {
     }
 
     /**
-     * Converts RGB values (between 0.0 and 1.0) to a grayscale value (between 0.0 and 1.0) according to the PAL/NTSC
-     * conversion.
+     * Converts RGB values (between 0.0 and 1.0) to a grayscale value (between
+     * 0.0 and 1.0) according to the PAL/NTSC conversion.
+     *
      * @param pR
      * @param pG
      * @param pB
@@ -150,8 +159,9 @@ public class ImageUtils {
     }
 
     /**
-     * Converts RGB values (between 0.0f and 1.0f) to a grayscale value (between 0.0f and 1.0f) according to the
-     * PAL/NTSC conversion.
+     * Converts RGB values (between 0.0f and 1.0f) to a grayscale value (between
+     * 0.0f and 1.0f) according to the PAL/NTSC conversion.
+     *
      * @param pR
      * @param pG
      * @param pB
@@ -163,6 +173,7 @@ public class ImageUtils {
 
     /**
      * Returns a BufferedImage built from the specified integer array.
+     *
      * @param pArray
      * @return
      */
@@ -173,19 +184,30 @@ public class ImageUtils {
         // TODO manage hasAlphaChannel.
 
         /* Format the data. */
-        byte[] formattedData = new byte[4 * h * w];
+        // byte[] formattedData = new byte[4 * h * w];
+        // int cpt = 0;
+        // for (int i = 0; i < h; ++i) {
+        // for (int j = 0; j < w; ++j) {
+        // formattedData[cpt] = (byte) ((pArray[i][j] >> 24) & 0xff);
+        // formattedData[cpt + 1] = (byte) (pArray[i][j] & 0xff);
+        // formattedData[cpt + 2] = (byte) ((pArray[i][j] >> 8) & 0xff);
+        // formattedData[cpt + 3] = (byte) ((pArray[i][j] >> 16) & 0xff);
+        // cpt += 4;
+        // }
+        // }
+
+        byte[] formattedData = new byte[3 * h * w];
         int cpt = 0;
         for (int i = 0; i < h; ++i) {
             for (int j = 0; j < w; ++j) {
-                formattedData[cpt] = (byte) ((pArray[i][j] >> 24) & 0xff);
-                formattedData[cpt + 1] = (byte) (pArray[i][j] & 0xff);
-                formattedData[cpt + 2] = (byte) ((pArray[i][j] >> 8) & 0xff);
-                formattedData[cpt + 3] = (byte) ((pArray[i][j] >> 16) & 0xff);
-                cpt += 4;
+                formattedData[cpt] = (byte) (pArray[i][j] & 0xff);
+                formattedData[cpt + 1] = (byte) ((pArray[i][j] >> 8) & 0xff);
+                formattedData[cpt + 2] = (byte) ((pArray[i][j] >> 16) & 0xff);
+                cpt += 3;
             }
         }
 
-        BufferedImage bufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage bufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
         byte[] imageArray = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
         System.arraycopy(formattedData, 0, imageArray, 0, formattedData.length);
 
@@ -194,6 +216,7 @@ public class ImageUtils {
 
     /**
      * Returns the Color corresponding to the specified RGBA integer.
+     *
      * @param pColorInt
      * @return
      */

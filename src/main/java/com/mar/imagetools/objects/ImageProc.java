@@ -3,8 +3,9 @@ package com.mar.imagetools.objects;
 import com.mar.algotools.mathematics.utils.ArrayUtils;
 
 /**
- * Represents an RGB image (without alpha channel). The data is stored as double arrays, in order to have more precision
- * than in {@link Image}.
+ * Represents an RGB image (without alpha channel). The data is stored as double
+ * arrays, in order to have more precision than in {@link Image}.
+ *
  * @author mrenauld
  */
 public class ImageProc {
@@ -14,6 +15,7 @@ public class ImageProc {
 
     /**
      * Constructs a new ImageProc from the specified {@link Image}.
+     *
      * @param pImage
      */
     public ImageProc(Image pImage) {
@@ -25,6 +27,7 @@ public class ImageProc {
 
     /**
      * Copy constructor.
+     *
      * @param pImage
      */
     public ImageProc(ImageProc pImage) {
@@ -36,6 +39,7 @@ public class ImageProc {
 
     /**
      * Constructs an empty ImageProc with specified width and height.
+     *
      * @param pWidth
      * @param pHeight
      */
@@ -48,6 +52,7 @@ public class ImageProc {
 
     /**
      * Adds the specified offset to all channel data.
+     *
      * @param pOffset
      */
     public void add(double pOffset) {
@@ -57,7 +62,9 @@ public class ImageProc {
     }
 
     /**
-     * Adds the specified offset array to all channel data (the array must have the same size as the image).
+     * Adds the specified offset array to all channel data (the array must have
+     * the same size as the image).
+     *
      * @param pOffsetArray
      */
     public void add(double[][] pOffsetArray) {
@@ -68,6 +75,7 @@ public class ImageProc {
 
     /**
      * Adds the specified offset to the specified channel data.
+     *
      * @param pChannelId
      * @param pOffset
      */
@@ -80,7 +88,9 @@ public class ImageProc {
     }
 
     /**
-     * Adds the specified offset array to the specified channel data (the array must have the same size as the image).
+     * Adds the specified offset array to the specified channel data (the array
+     * must have the same size as the image).
+     *
      * @param pChannelId
      * @param pOffsetArray
      */
@@ -94,6 +104,7 @@ public class ImageProc {
 
     /**
      * Adds the specified ImageProc to this ImageProc.
+     *
      * @param pImage
      */
     public void addImage(ImageProc pImage) {
@@ -107,8 +118,9 @@ public class ImageProc {
     }
 
     /**
-     * Returns a new {@link Image} built from this ImageProc. All values below 0.0 or above 1.0 will be rounded to 0.0
-     * and 1.0.
+     * Returns a new {@link Image} built from this ImageProc. All values below
+     * 0.0 or above 1.0 will be rounded to 0.0 and 1.0.
+     *
      * @return
      */
     public Image convertToImage() {
@@ -123,6 +135,7 @@ public class ImageProc {
 
     /**
      * Returns the data for the specified channel.
+     *
      * @param pChannelId
      * @return
      */
@@ -132,6 +145,7 @@ public class ImageProc {
 
     /**
      * Returns the image height.
+     *
      * @return
      */
     public int getHeight() {
@@ -140,19 +154,20 @@ public class ImageProc {
 
     /**
      * Returns the image width.
+     *
      * @return
      */
     public int getWidth() {
         if (channelData[0].length > 0) {
             return channelData[0][0].length;
-        }
-        else {
+        } else {
             return 0;
         }
     }
 
     /**
-     * Inverts the data: for each channel, for each pixel the new values is 1.0 minus the old one.
+     * Inverts the data: for each channel, for each pixel the new values is 1.0
+     * minus the old one.
      */
     public void invert() {
         for (int c = 0; c < Image.NB_COLOR_CHANNEL; ++c) {
@@ -188,7 +203,9 @@ public class ImageProc {
     }
 
     /**
-     * Normalizes the data so that all data for the specified channel index sits between 0.0 and 1.0.
+     * Normalizes the data so that all data for the specified channel index sits
+     * between 0.0 and 1.0.
+     *
      * @param pChannelId
      */
     public void normalize(int pChannelId) {
@@ -210,7 +227,29 @@ public class ImageProc {
     }
 
     /**
+     * Sets the same data for all color channels.
+     * 
+     * @param pChannelData
+     */
+    public void setAllColorChannels(double[][] pChannelData) {
+        for (int c = 0; c < Image.NB_COLOR_CHANNEL; ++c) {
+            channelData[c] = ArrayUtils.copy(pChannelData);
+        }
+    }
+
+    /**
+     * Sets the data for the specified channel index.
+     *
+     * @param pChannelId
+     * @param pChannelData
+     */
+    public void setChannel(int pChannelId, double[][] pChannelData) {
+        channelData[pChannelId] = ArrayUtils.copy(pChannelData);
+    }
+
+    /**
      * Subtracts the specified ImageProc from this ImageProc.
+     *
      * @param pImage
      */
     public void subtractImage(ImageProc pImage) {
@@ -224,16 +263,9 @@ public class ImageProc {
     }
 
     /**
-     * Sets the data for the specified channel index.
-     * @param pChannelId
-     * @param pChannelData
-     */
-    public void setChannel(int pChannelId, double[][] pChannelData) {
-        channelData[pChannelId] = ArrayUtils.copy(pChannelData);
-    }
-
-    /**
-     * Keeps only data above or below a specified threshold. The remaining data is set to 0.0.
+     * Keeps only data above or below a specified threshold. The remaining data
+     * is set to 0.0.
+     *
      * @param pThreshold
      * @param pKeepUpper
      */
@@ -252,6 +284,7 @@ public class ImageProc {
 
     /**
      * Multiplies the data by the specified coefficient.
+     *
      * @param pCoef
      */
     public void times(double pCoef) {
@@ -261,7 +294,9 @@ public class ImageProc {
     }
 
     /**
-     * Multiplies the data by the specified coefficient array (the array must have the same size as the image).
+     * Multiplies the data by the specified coefficient array (the array must
+     * have the same size as the image).
+     *
      * @param pCoefArray
      */
     public void times(double[][] pCoefArray) {
@@ -272,6 +307,7 @@ public class ImageProc {
 
     /**
      * Multiplies the specified channel data by the specified coefficient.
+     *
      * @param pChannelId
      * @param pCoef
      */
@@ -284,8 +320,9 @@ public class ImageProc {
     }
 
     /**
-     * Multiplies the specified channel data by the specified coefficient array (the array must have the same size as
-     * the image).
+     * Multiplies the specified channel data by the specified coefficient array
+     * (the array must have the same size as the image).
+     *
      * @param pChannelId
      * @param pCoefArray
      */

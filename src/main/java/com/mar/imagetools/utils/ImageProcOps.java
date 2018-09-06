@@ -1,6 +1,7 @@
-package com.mar.imagetools.objects;
+package com.mar.imagetools.utils;
 
-import com.mar.imagetools.utils.ImageUtils;
+import com.mar.imagetools.objects.Image;
+import com.mar.imagetools.objects.ImageProc;
 
 /**
  * Operations on {@link ImageProc} objects. Contrarily to {@link Image}, {@link ImageProc} encodes the pixel values in
